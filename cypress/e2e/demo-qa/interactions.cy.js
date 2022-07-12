@@ -1,40 +1,34 @@
-// import page objects
+import Selectable from "../../pageObjects/selectable";
 
 context("Interactions", () => {
   context("Selectable", () => {
-    // Create SelectablePage page object
-    // Create scenario 1:
-    it('scenario 1', () => {
-        cy.visit('https://demoqa.com/selectable');
-        cy.contains('Cras justo odio').click();
-        cy.contains('Cras justo odio').should('have.class', 'mt-2 list-group-item active list-group-item-action');
-        cy.contains('Dapibus ac facilisis in').click();
-        cy.contains('Dapibus ac facilisis in').should('have.class', 'mt-2 list-group-item active list-group-item-action');;
+    beforeEach(() => {
+      Selectable.visit();
 
+    });
+    
+    
+    it('scenario 1', () => {
+      Selectable.firstString.click();
+      Selectable.firstString.should('have.class', 'mt-2 list-group-item active list-group-item-action');
+      Selectable.secondString.click();
+      Selectable.secondString.should('have.class', 'mt-2 list-group-item active list-group-item-action');;
       });
-    // Click on "Cras justo odio"
-    // Validate that class contains active
-    // Click on "Dapibus ac facilisis in"
-    // Validate that chosen buttons contains class active
 
     it('scenario 2', () =>{
-      cy.visit('https://demoqa.com/selectable');
 
-      cy.get('[id="demo-tab-grid"]').click();
+      Selectable.openGrid.click();
 
-      cy.contains('Four').click();
-      cy.contains('Eight').click();
-      cy.contains('Six').click();
-      cy.contains('Two').click();
+      Selectable.number4.click();
+      Selectable.number8.click();
+      Selectable.number6.click();
+      Selectable.number2.click();
 
-      cy.contains('Four').should('have.class','list-group-item active list-group-item-action');
-      cy.contains('Eight').should('have.class','list-group-item active list-group-item-action');
-      cy.contains('Six').should('have.class','list-group-item active list-group-item-action');
-      cy.contains('Two').should('have.class','list-group-item active list-group-item-action');
+      Selectable.number4.should('have.class','list-group-item active list-group-item-action');
+      Selectable.number8.should('have.class','list-group-item active list-group-item-action');
+      Selectable.number6.should('have.class','list-group-item active list-group-item-action');
+      Selectable.number2.should('have.class','list-group-item active list-group-item-action');
     });
-    // Create scenario 2:
-    // Click on grid
-    // Click on numbers 4, 8, 6, 2
-    // Validate that chosen buttons contains class active
+   
   });
 });

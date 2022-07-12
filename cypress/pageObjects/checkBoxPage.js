@@ -1,13 +1,22 @@
 import BasePage from "./basePage";
 
-class checkBoxPage extends BasePage {
+class CheckBoxPage extends BasePage {
+
   static get url() {
-    return "/text-box";
+    return "/checkbox";
   }
 
-  static get xxx() {
-    return cy.get("xxx");
+  static get expandButton() {
+    return cy.get ('[class="rct-option rct-option-expand-all"]');
+  }
+
+  static get list() {
+    return cy.get("ol");
+  }
+
+  static get validation() {
+    return cy.get ('[class="display-result mt-4"]');
   }
 }
 
-export default checkBoxPage;
+export default CheckBoxPage;

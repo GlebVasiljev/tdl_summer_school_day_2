@@ -1,142 +1,173 @@
 import TextBoxPage from "../../pageObjects/textBoxPage";
 import CheckBoxPage from "../../pageObjects/checkBoxPage";
+import RadioButtonPage from "../../pageObjects/radioButtonPage";
+import WebTablePage from "../../pageObjects/webTablePage"
+import ButtonsPage from "../../pageObjects/buttonsPage"
 context("Elements Page", () => {
 
   context("Text box scenarios", () => {
     beforeEach(() => {
       TextBoxPage.visit();
     });
+
     // Create texbox scenario
     it('Shoud fill', () => {
-      cy.get('[id="userName"]').click().type('Gleb');
-      cy.get('[id="userEmail"]').click().type('glebsvasiljevs@gmail.com');
-      cy.get('[id="currentAddress"]').click().type('Pils iela 45');
-      cy.get('[id="permanentAddress"]').click().type('Pils iela 54');
+      TextBoxPage.userName.click().type('Gleb');
+      TextBoxPage.userEmail.click().type('glebsvasiljevs@gmail.com');
+      TextBoxPage.firstAddress.click().type('Pils iela 45');
+      TextBoxPage.secondAddress.click().type('Pils iela 54');
+
       //Press submit
-      cy.get('#submit').click();
+      TextBoxPage.submit.click();
+
       //Validate
-      cy.get('[id="name"]').should('have.text', 'Name:Gleb');
-      cy.get('[id="email"]').should("have.text", 'Email:glebsvasiljevs@gmail.com');
-      //cy.get('[id="currentAddress"]').should('have.text','Current Address :Pils iela 45 ');
-      //cy.get('[id="permanentAddress"]').should('have.text','Permananet Address :Pils iela 54 ');
+      TextBoxPage.validateUserName.should('have.text', 'Name:Gleb');
+      TextBoxPage.validateUserEmail.should("have.text", 'Email:glebsvasiljevs@gmail.com');
+      TextBoxPage.validateFirstAddress.should('have.text', 'Current Address :Pils iela 45 ');
+      TextBoxPage.validateSecondAddress.should('have.text', 'Permananet Address :Pils iela 54 ');
     });
   });
 
 
   context("Check box scenarios", () => {
-    // Create CheckBoxPage page object
+
     beforeEach(() => {
-      cy.visit('https://demoqa.com/checkbox');
-    });
-    // Create checkbox scenario 1:
-    it('scenario 1', () => {
-      // Click the "+"/expand button
-      cy.get('[class="rct-option rct-option-expand-all"]').click();
-      // Click Notes, React, Angular, General, Excel File.doc
-      cy.get('[id="tree-node-workspace"]').check({ force: true });
-      // Validate the clicked checkboxes
-      cy.get('[class="rct-icon rct-icon-check"]').should('be.visible');
-      cy.get('[class="rct-icon rct-icon-check"]').should('be.visible');
-      cy.get('[class="rct-icon rct-icon-check"]').should('be.visible');
+      CheckBoxPage.visit();
     });
 
-    // Create checkbox scenario 2:
     it('scenario 1', () => {
+
+      // Click the "+"/expand button
+      CheckBoxPage.expandButton.click();
+
+      // Click Notes, React, Angular, General, Excel File.doc
+      CheckBoxPage.list.contains('Notes').click();
+      CheckBoxPage.list.contains('React').click();
+      CheckBoxPage.list.contains('Angular').click();
+      CheckBoxPage.list.contains('General').click();
+      CheckBoxPage.list.contains('Excel File.doc').click();
+
+      // Validate the clicked checkboxes
+      CheckBoxPage.validation.should('contain', 'notes');
+      CheckBoxPage.validation.should('contain', 'react');
+      CheckBoxPage.validation.should('contain', 'angular');
+      CheckBoxPage.validation.should('contain', 'general');
+      CheckBoxPage.validation.should('contain', 'excelFile');
+
+    });
+
+    it('scenario 2', () => {
+
       // Click expand button
-      cy.get('[class="rct-option rct-option-expand-all"]').click();
+      CheckBoxPage.expandButton.click();
 
       // Click Office
-      cy.get('[id="tree-node-office"]').check({ force: true });
-      
+      CheckBoxPage.list.contains('Office').click();
+
       // Validate the checked checkboxes
-      cy.get('[class="text-success"]').should('have.text','officepublicprivateclassifiedgeneral');
-      
+      CheckBoxPage.validation.should('contain', 'office');
+      CheckBoxPage.validation.should('contain', 'public');
+      CheckBoxPage.validation.should('contain', 'private');
+      CheckBoxPage.validation.should('contain', 'classified');
+      CheckBoxPage.validation.should('contain', 'general');
+
     });
   });
 
   context("Radio button scenarios", () => {
-    // Create RadioButtons page object
+    beforeEach(() => {
+      RadioButtonPage.visit();
+    });
 
-    // Scenario 1:
     it('Scenario 1', () => {
-      cy.visit('https://demoqa.com/radio-button');
+
       // Click yesButton
-      cy.get('[id="yesRadio"]').check({ force: true });
+      RadioButtonPage.yesRadio.check({ force: true });
 
       // validate the message
-      cy.get('[class="text-success"]').should('have.text', 'Yes');
+      RadioButtonPage.validation.should('have.text', 'Yes');
 
       // click impressiveButton
-      cy.get('[id="impressiveRadio"]').check({ force: true });
+      RadioButtonPage.impressiveRadio.check({ force: true });
 
       // validate the message
-      cy.get('[class="text-success"]').should('have.text', 'Impressive');
+      RadioButtonPage.result.should('have.text', 'Impressive');
 
       // noButton - validate that the button exists but is disabled
-      cy.get('[id="noRadio"]').should('be.disabled');
+      RadioButtonPage.noButton.should('be.disabled');
 
     });
   });
 
   context("Web tables scenarios", () => {
-    // Create WebTables page object
-    // Create scenario 1:
+    beforeEach(() => {
+      WebTablePage.visit();
+
+    });
     it('Scenario 1', () => {
-      cy.visit('https://demoqa.com/webtables');
       // Click add record button
-      cy.get('[id="addNewRecordButton"]').click();
+      WebTablePage.addRecord.click();
 
       // fill in the necessary information
-      cy.get('[id="firstName"]').click().type('Gleb');
-      cy.get('[id="lastName-wrapper"]').click().type('Vasiljev');
-      cy.get('[id="userEmail"]').click().type('glebsvasiljevs@gmail.com');
-      cy.get('[id="age"]').click().type('18');
-      cy.get('[id="salary"]').click().type('100');
-      cy.get('[id="department"]').click().type('None');
+      WebTablePage.addUserFirstName.click().type('Gleb');
+      WebTablePage.addUserLastName.click().type('Vasiljev');
+      WebTablePage.addUserEmail.click().type('glebsvasiljevs@gmail.com');
+      WebTablePage.addUserAge.click().type('18');
+      WebTablePage.addUserSalary.click().type('100');
+      WebTablePage.addUserDepartment.click().type('None');
 
       // click submit button
-      cy.get('[id="submit"]').click();
+      WebTablePage.submit.click();
 
       // search for the user based on previously added information
-      cy.contains('GlebVasiljev18glebsvasiljevs@gmail.com100None');
+      WebTablePage.userTable.contains('GlebVasiljev18glebsvasiljevs@gmail.com100None');
 
       // validate tha the user is visible
-      cy.contains('Gleb').should('be.visible');
+      WebTablePage.userTable.contains('Gleb').should('be.visible');
+      WebTablePage.userTable.contains('Vasiljev').should('be.visible');
+      WebTablePage.userTable.contains('glebsvasiljevs@gmail.com').should('be.visible');
+      WebTablePage.userTable.contains('18').should('be.visible');
+      WebTablePage.userTable.contains('100').should('be.visible');
+      WebTablePage.userTable.contains('None').should('be.visible');
     });
 
     // Create Scenario 2:
     it('Scenario 2', () => {
-      cy.visit('https://demoqa.com/webtables');
-
+      
       // Delete all table rows
-      cy.get('[id="delete-record-1"]').click();
-      cy.get('[id="delete-record-2"]').click();
-      cy.get('[id="delete-record-3"]').click();
+      WebTablePage.removeTable1.click();
+      WebTablePage.removeTable2.click();
+      WebTablePage.removeTable3.click();
+
       // Validate that we see text - No rows found
-      cy.get('[class="rt-noData"]').should('be.visible');
+      WebTablePage.validateRemovedTable.should('be.visible');
     });
   });
 
   context("Buttons scenarios", () => {
-    // Create buttons clicking scenario
+    beforeEach(() => {
+      ButtonsPage.visit();
+
+    });
     it('scenario 1', () => {
-      // Create Buttons page
-      cy.visit('https://demoqa.com/buttons');
-      // Check documentation https://docs.cypress.io/api/commands/and for how to perform different types of clicking
+
       // Click Double click button
-      cy.get('[id="doubleClickBtn"]').dblclick()
+      ButtonsPage.doubleClick.dblclick();
+
       // Validate the double click message
-      cy.get('[id="doubleClickMessage"]').should('have.text', 'You have done a double click');
+      ButtonsPage.doubleClickValidation.should('have.text', 'You have done a double click');
+      
       // Click rightclick button
-      cy.get('[id="rightClickBtn"]').rightclick()
+      ButtonsPage.rightClick.rightclick();
+
       // Validate the right click message
-      cy.get('[id="rightClickMessage"]').should('have.text', 'You have done a right click');
+      ButtonsPage.rightClickValidation.should('have.text', 'You have done a right click');
+      
       // Do dynamic click
-      cy.contains('[class="btn btn-primary"]')
-      .should('maxlength','9')
-      .click();
-      // Validate dynamic click message
-      cy.get('[id="dynamicClickMessage"]').should('have.text', 'You have done a dynamic click');
+      ButtonsPage.dynamicClick.click();
+      
+        // Validate dynamic click message
+      ButtonsPage.DynamicClickValidation.should('have.text', 'You have done a dynamic click');
     });
   });
 });
