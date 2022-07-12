@@ -2,7 +2,7 @@ import TextBoxPage from "../../pageObjects/textBoxPage";
 import CheckBoxPage from "../../pageObjects/checkBoxPage";
 context("Elements Page", () => {
 
-  context.skip("Text box scenarios", () => {
+  context("Text box scenarios", () => {
     beforeEach(() => {
       TextBoxPage.visit();
     });
@@ -117,7 +117,7 @@ context("Elements Page", () => {
     });
   });
 
-  context.only("Buttons scenarios", () => {
+  context("Buttons scenarios", () => {
     // Create buttons clicking scenario
     it('scenario 1', () => {
       // Create Buttons page
